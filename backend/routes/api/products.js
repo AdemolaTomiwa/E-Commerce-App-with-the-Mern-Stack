@@ -22,29 +22,6 @@ router.get('/:id', (req, res) => {
       .catch((err) => res.json({ message: 'No Product Found!' }));
 });
 
-// Create a product
-// POST @api/products
-// Private
-router.post('/', (req, res) => {
-   const newProduct = new Product({
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      brand: req.body.brand,
-      image: req.body.image,
-      category: req.body.category,
-      countInStock: req.body.countInStock,
-   });
-
-   newProduct
-      .save()
-      .then((product) =>
-         res
-            .status(201)
-            .json({ product, message: 'Product created successfully!' })
-      );
-});
-
 // Delete a Product
 // DELETE @api/products/:id
 // Private
@@ -61,6 +38,59 @@ router.delete('/:id', (req, res) => {
       .catch((err) =>
          res.status(400).json({ success: false, message: 'An error occured' })
       );
+});
+
+// Create a product
+// POST @api/products
+// Private
+router.post('/', (req, res) => {
+   const newProduct = new Product({
+      name: 'Sample Name',
+      description: 'Sample Description',
+      price: 0,
+      brand: 'Sample Brand',
+      image: '/images/sample.jpg',
+      category: 'Sample Category',
+      countInStock: 0,
+   });
+
+   newProduct
+      .save()
+      .then((product) =>
+         res
+            .status(201)
+            .json({ product, message: 'Product created successfully!' })
+      );
+});
+
+// Update a product
+// PUT @api/products/:id
+// Private
+router.put('/:id', (req, res) => {
+   Product.findById(req.params.id)
+      .then((product) => {
+         if (product) {
+            product.name = req.body.name;
+            product.price = req.body.price;
+            product.description = req.body.description;
+            product.image = req.body.image;
+            product.brand = req.body.brand;
+            product.category = req.body.category;
+            product.countInStock = req.body.countInStock;
+
+            product.save().then(res.status(201).json({ product }));
+
+            // const updatedProduct = product.save().then(
+            //    res.status(201).json({
+            //       message: 'Product Created',
+            //       updatedProduct,
+            //    })
+            // );
+         } else {
+            res.status(501).json({ message: 'Product Not Found' });
+         }
+      })
+      .catch((err) => console.log(err));
 });
 
 module.exports = router;
