@@ -1,3 +1,4 @@
 {
-   "mongoURI": "mongodb+srv://tomiwa:tomiwa12345@cluster0.xwfyb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+   "mongoURI": "mongodb+srv://tomiwa:tomiwa12345@cluster0.xwfyb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+   "jwtSecret": "ecommerce_mern_jwt_secret"
 }

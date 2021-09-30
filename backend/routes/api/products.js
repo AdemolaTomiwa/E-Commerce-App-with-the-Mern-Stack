@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
    Product.find()
       .sort({ date: -1 })
       .then((product) => res.json({ product, success: true }))
-      .catch((err) => console.log({ err, success: false }));
+      .catch((err) => res.status(400));
 });
 
 // Get a single product
@@ -79,13 +79,6 @@ router.put('/:id', (req, res) => {
             product.countInStock = req.body.countInStock;
 
             product.save().then(res.status(201).json({ product }));
-
-            // const updatedProduct = product.save().then(
-            //    res.status(201).json({
-            //       message: 'Product Created',
-            //       updatedProduct,
-            //    })
-            // );
          } else {
             res.status(501).json({ message: 'Product Not Found' });
          }

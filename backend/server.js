@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const config = require('config');
+const path = require('path');
 
 const productRoute = require('./routes/api/products');
+const userRoutes = require('./routes/api/users');
+const authRoutes = require('./routes/api/auth');
 const uploadRoute = require('./routes/api/upload');
 
 const app = express();
@@ -24,7 +26,12 @@ mongoose
 
 // Routes
 app.use('/api/products', productRoute);
+app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoute);
+
+// const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(path.resolve(), '/uploads')));
 
 const PORT = process.env.PORT || 5000;
 
